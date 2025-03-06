@@ -1,0 +1,66 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+#trafficCanvas {
+    display: block;
+}
+
+.controls {
+    position: fixed;
+    top: 70px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+}
+
+.controls1 {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+}
+
+.controls input {
+    width: 50px;
+    margin: 5px;
+}
+
+.controls1 input {
+    width: 50px;
+    margin: 5px;
+}
+
+#city1 {
+    margin-left: 70%;
+    width: 17%;
+}
+
+#city {
+    margin-top: 14%;
+    width: 17%;
+}
