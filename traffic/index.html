@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Traffic simulator</title>
+    <link rel="icon" type="image/png" href="images/alatoo-logo.png">
+    <link href="css/style.css" rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+    <main>
+        <div>
+            <img class="background" src="images/background.png" alt="">
+        </div>
+
+        <canvas id="trafficCanvas"></canvas>
+        <div class="controls">
+            <label for="redTime">Красный (сек):</label>
+            <input type="number" id="redTime" value="5" min="1" step="1">
+
+            <label for="greenTime">Зеленый (сек):</label>
+            <input type="number" id="greenTime" value="5" min="1" step="1">
+
+            <button onclick="updateTrafficLightTimer()">Обновить Таймеры</button>
+        </div>
+        <div class="controls1">
+            <label for="carSpeed">Скорость машин:</label>
+            <input type="number" id="carSpeed" value="3" min="1" step="1">
+
+            <label for="carNumbers">Кол-во машин:</label>
+            <input type="number" id="carNumbers" value="5" min="1" step="1">
+
+            <button onclick="updateTrafficLightTimer()">Обновить Машины</button>
+        </div>
+        <img id="carRight" src="images/car_rigth.png" style="display: none;" alt="">
+        <img id="carLeft" src="images/car_left.png" style="display: none;" alt="">
+        <img id="carUp" src="images/car_up.png" style="display: none;" alt="">
+        <img id="carDown" src="images/car_down.png" style="display: none;" alt="">
+
+        <div class="city1">
+            <img id='city1' src="images/city.png" alt="">
+            <img id='city' src="images/city.png" alt="">
+        </div>
+    </main>
+
+<script src="js/main.js"></script>
+</body>
+</html>
