@@ -4,9 +4,9 @@ const ctx = canvas.getContext("2d");
 let laneh = { cars: [] };
 let lanev = { cars: [] };
 
-const roadWidth = Math.min(canvas.width, canvas.height) * 0.3; // Ширина дороги
-const laneOffsetRight = (roadWidth / 4)+45;
-const laneOffset = (roadWidth / 4)-65;
+const roadWidth = Math.min(canvas.width, canvas.height); // Ширина дороги
+const laneOffsetRight = (roadWidth / 4)-17;
+const laneOffset = (roadWidth / 4)-57;
 
 const stopLineX = canvas.width / 2
 const stopLineY = canvas.height / 2
@@ -24,7 +24,7 @@ function resizeCanvas() {
 }
 
 function drawIntersection() {
-    const roadWidth = Math.min(canvas.width, canvas.height) * 0.3;
+    const roadWidth = Math.min(canvas.width, canvas.height) * 0.1;
     ctx.fillStyle = "#2b2b2b";
 
     ctx.fillRect(0, canvas.height / 2 - roadWidth / 2, canvas.width, roadWidth);
@@ -171,10 +171,9 @@ class Car {
         this.dy = startPoint.dy;
         this.memdx = this.dx;
         this.memdy = this.dy;
-        this.width = 60; // Ширина изображения машины
-        this.height = 30; // Высота изображения машины
+        this.width = 30;
+        this.height = 30;
 
-        // Определяем изображение в зависимости от направления
         if (this.dx > 0) {
             this.image = document.getElementById("carRight");
         } else if (this.dx < 0) {
@@ -207,16 +206,15 @@ class Car {
         }
     }
 
-    // Проверка, находится ли машина перед стоп-линией
     isBeforeStopLine() {
         if (this.dx > 0) { // Движение вправо
-            return (this.x + this.width) / 2 <= stopLineX;
+            return (this.x + this.width) / 2 <= stopLineX -20;
         } else if (this.dx < 0) { // Движение влево
-            return (this.x - this.width) / 2 >= stopLineX
+            return (this.x - this.width) / 2 >= stopLineX +20
         } else if (this.dy > 0) { // Движение вниз
-            return (this.y + this.height) / 2 <= stopLineY;
+            return (this.y + this.height) / 2 <= stopLineY -20;
         } else if (this.dy < 0) { // Движение вверх
-            return (this.y - this.height) / 2 >= stopLineY;
+            return (this.y - this.height) / 2 >= stopLineY +20;
         }
         return false;
     }

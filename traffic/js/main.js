@@ -4,13 +4,13 @@ canvas.height = window.innerHeight - 20;
 let ctx = canvas.getContext('2d');
 document.body.appendChild(canvas);
 
-var carRadius = 10;
-var safteyDistance = carRadius + 5;
-var semaphoreIntervals = 400;
-var carSpeed = 3;
-var pushCarEveryNFrames = 30;
+let carRadius = 10;
+let safteyDistance = carRadius + 5;
+let semaphoreIntervals = 400;
+let carSpeed = 3;
+let pushCarEveryNFrames = 120;
 
-var Car = function (startPoint) {
+let Car = function (startPoint) {
     this.x = startPoint.x;
     this.y = startPoint.y;
     this.dx = startPoint.dx;
@@ -19,7 +19,6 @@ var Car = function (startPoint) {
     this.memdy = this.dy;
     this.radius = carRadius;
 
-    // Выбор изображения в зависимости от направления
     if (this.dx > 0) {
         this.img = document.getElementById('carRight');
     } else if (this.dx < 0) {
@@ -57,7 +56,7 @@ Car.prototype.draw = function() {
     ctx.restore();
 };
 
-var Semaphore = function (loc) {
+let Semaphore = function (loc) {
 	this.loc = loc;
 	if (loc.greenOn) {
 		this.light = 2;
@@ -72,8 +71,8 @@ var Semaphore = function (loc) {
 
 Semaphore.prototype.draw = function () {
 	ctx.save();
-	var anchorx = this.loc.x;
-	var anchory = this.loc.y;
+	let anchorx = this.loc.x;
+	let anchory = this.loc.y;
 
 	if (this.loc.dy < 0) {
 		anchorx = this.loc.x;
@@ -90,14 +89,14 @@ Semaphore.prototype.draw = function () {
 	if (this.light === 0) {
 		ctx.fillStyle = 'red';
 	}
-	var x = anchorx + (0 * this.loc.dx + 15);
-	var y = anchory + (0 * this.loc.dy + 15);
+	let x = anchorx + 15
+	let y = anchory + 15
 	ctx.arc(x,y, 10, 0, Math.PI * 2, true);
 	ctx.fill();
 
 	ctx.beginPath();
 	ctx.fillStyle = 'gray';
-	if (this.light == 1) {
+	if (this.light === 1) {
 		ctx.fillStyle = 'orange';
 	}
 	x = anchorx + (1 * this.loc.dx + 15);
@@ -107,7 +106,7 @@ Semaphore.prototype.draw = function () {
 
 	ctx.beginPath();
 	ctx.fillStyle = 'gray';
-	if (this.light == 2) {
+	if (this.light === 2) {
 		ctx.fillStyle = 'green';
 	}
 	x = anchorx + (2 * this.loc.dx + 15);
@@ -137,32 +136,32 @@ Semaphore.prototype.check = function () {
 	}
 };
 
-var leftStart = {
-	x : 0 + carRadius,
+let leftStart = {
+	x : carRadius,
 	y : canvas.height / 2 + safteyDistance,
 	dx : carSpeed,
 	dy : 0
 };
-var rightStart = {
+let rightStart = {
 	x : canvas.width - carRadius,
 	y : canvas.height / 2 - safteyDistance,
 	dx: -1 * carSpeed,
 	dy: 0
 };
-var topStart = {
+let topStart = {
 	x : canvas.width / 2 - safteyDistance,
-	y : 0 + 2 * carRadius,
+	y : 2 * carRadius,
 	dx : 0,
 	dy : carSpeed
 };
-var bottomStart = {
+let bottomStart = {
 	x : canvas.width / 2 + safteyDistance,
 	y : canvas.height - 2 * carRadius,
 	dx: 0,
 	dy: -1 * carSpeed
 };
 
-var semLeft = {
+let semLeft = {
 	x: topStart.x - safteyDistance - carRadius / 2 - 75,
 	y: leftStart.y + safteyDistance + carRadius / 2,
 	width: 75,
@@ -172,7 +171,7 @@ var semLeft = {
 	greenOn : false,
 	horizontal: true
 };
-var semRight = {
+let semRight = {
 	x: bottomStart.x + safteyDistance + carRadius / 2,
 	y: rightStart.y - carRadius / 2 - safteyDistance - 30,
 	width: 75,
@@ -182,7 +181,7 @@ var semRight = {
 	greenOn : false,
 	horizontal: true
 };
-var semUp = {
+let semUp = {
 	x: topStart.x - safteyDistance - carRadius / 2 - 30,
 	y: rightStart.y - carRadius / 2 - safteyDistance - 75,
 	width: 30,
@@ -191,7 +190,7 @@ var semUp = {
 	dy: -22,
 	greenOn : true
 };
-var semBottom = {
+let semBottom = {
 	x: bottomStart.x + safteyDistance + carRadius / 2,
 	y: leftStart.y + safteyDistance + carRadius / 2,
 	width: 30,
@@ -202,7 +201,7 @@ var semBottom = {
 };
 
 //lane
-var Lane = function (type) {
+let Lane = function (type) {
 	this.type = type;
 
 	if (type === 'vertical') {
@@ -325,11 +324,11 @@ Lane.prototype.check = function () {
 	// check add new car cycle
 	this.counter += 1;
 	if ((this.counter % pushCarEveryNFrames) === 0) {
-		var lastUpCar = this.upLaneCars[this.upLaneCars.length - 1];
-		var lastDownCar = this.downLaneCars[this.downLaneCars.length - 1];
+		let lastUpCar = this.upLaneCars[this.upLaneCars.length - 1];
+		let lastDownCar = this.downLaneCars[this.downLaneCars.length - 1];
 
-		var newUpCar = new Car(this.upLaneStart);
-		var newDownCar = new Car(this.downLaneStart);
+		let newUpCar = new Car(this.upLaneStart);
+		let newDownCar = new Car(this.downLaneStart);
 
 		if (lastUpCar) {
 			if (Math.abs(lastUpCar.x - newUpCar.x) > (carRadius + safteyDistance) ||
@@ -350,8 +349,8 @@ Lane.prototype.check = function () {
 		}
 	}
 
-	for (var i = 0; i < this.upLaneCars.length; i++) {
-		if (this.upSem.light === 0 || this.upSem.light == 1) {
+	for (let i = 0; i < this.upLaneCars.length; i++) {
+		if (this.upSem.light === 0 || this.upSem.light === 1) {
 			if (this.type === 'vertical') {
 				if (this.upLaneCars[i].y <= this.upStop) {
 					if ((this.upLaneCars[i].y + this.upLaneCars[i].dy) > this.upStop) {
@@ -394,8 +393,8 @@ Lane.prototype.check = function () {
 		}
 	}
 
-	for (i = 0; i < this.downLaneCars.length; i++) {
-		if (this.downSem.light === 0 || this.downSem.light == 1) {
+	for (let i = 0; i < this.downLaneCars.length; i++) {
+		if (this.downSem.light === 0 || this.downSem.light === 1) {
 			if (this.type === 'vertical') {
 				if (this.downLaneCars[i].y >= this.downStop) {
 					if ((this.downLaneCars[i].y + this.downLaneCars[i].dy) < this.downStop) {
@@ -442,11 +441,9 @@ Lane.prototype.check = function () {
 Lane.prototype.draw = function () {
     ctx.save();
 
-    // Рисуем дорожное полотно
-    ctx.fillStyle = '#2a2a2a'; // Темно-серый цвет
+    ctx.fillStyle = '#2a2a2a';
 
     if (this.type === 'vertical') {
-        // Вертикальная дорога
         ctx.fillRect(
             this.upLineStart.x,
             0,
@@ -454,7 +451,6 @@ Lane.prototype.draw = function () {
             canvas.height
         );
     } else {
-        // Горизонтальная дорога
         ctx.fillRect(
             0,
             this.upLineStart.y,
@@ -463,12 +459,10 @@ Lane.prototype.draw = function () {
         );
     }
 
-    // Рисуем сплошные разделительные линии
-    ctx.strokeStyle = '#ffffff'; // Белый цвет линий
+    ctx.strokeStyle = '#ffffff';
     ctx.lineWidth = 3;
-    ctx.setLineDash([]); // Сплошная линия
+    ctx.setLineDash([])
 
-    // Центральная линия
     if (this.type === 'vertical') {
         ctx.beginPath();
         ctx.moveTo(canvas.width/2, 0);
@@ -481,7 +475,6 @@ Lane.prototype.draw = function () {
         ctx.stroke();
     }
 
-    // Остальная существующая разметка (как было)
     ctx.beginPath();
     ctx.moveTo(this.upLineStart.x, this.upLineStart.y);
     ctx.lineTo(this.upLineBreak.x, this.upLineBreak.y);
@@ -500,38 +493,53 @@ Lane.prototype.draw = function () {
 
     ctx.restore();
 
-    // Остальной существующий код
     this.upSem.draw();
     this.downSem.draw();
 
-    for (var i = 0; i < this.upLaneCars.length; i++) {
+    for (let i = 0; i < this.upLaneCars.length; i++) {
         this.upLaneCars[i].draw();
     }
 
-    for (i = 0; i < this.downLaneCars.length; i++) {
+    for (let i = 0; i < this.downLaneCars.length; i++) {
         this.downLaneCars[i].draw();
     }
 };
 
-var laneh = new Lane('horizontal');
-var lanev = new Lane('vertical');
+let laneh = new Lane('horizontal');
+let lanev = new Lane('vertical');
 
 window.requestAnimFrame = (function(){
   return  window.requestAnimationFrame       ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame    ||
           function( callback ){
             window.setTimeout(callback, 1000 / 60);
           };
 })();
 
+Lane.prototype.drawCars = function() {
+    this.upSem.draw();
+    this.downSem.draw();
+
+    for (let i = 0; i < this.upLaneCars.length; i++) {
+        this.upLaneCars[i].draw();
+    }
+
+    for (let i = 0; i < this.downLaneCars.length; i++) {
+        this.downLaneCars[i].draw();
+    }
+};
+
 (function animloop(){
-	requestAnimFrame(animloop);
+    requestAnimFrame(animloop);
 
-	laneh.check();
-	lanev.check();
+    laneh.check();
+    lanev.check();
 
-	laneh.draw();
-	lanev.draw();
+    // Сначала рисуем все дороги
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    lanev.draw();
+    laneh.draw();
 
+    // Затем все машины поверх дорог
+    lanev.drawCars();
+    laneh.drawCars();
 })();
